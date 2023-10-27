@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Appointment App</title>
+</head>
+<body>
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <label for="phone">Phone number:</label>
+        <input type="text" id="phone" name="phone">
+        <input type="button" value="Submit" onclick="addPerson()">
+    </form>
+    <div id="peopleList"></div>
+    <script>
+        var people = []; // Array to store added people
+
+        function addPerson() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+
+            // Create a new person object
+            var person = { name: name, email: email, phone: phone };
+            people.push(person);
+
+            displayPeople();
+            clearForm();
+        }
+
+        function displayPeople() {
+            var peopleListDiv = document.getElementById("peopleList");
+            peopleListDiv.innerHTML = ''; // Clear the list
+
+            for (var i = 0; i < people.length; i++) {
+                var person = people[i];
+                var personInfo = person.name + ' - ' + person.email + ' - ' + person.phone;
+
+                // Create a "Delete" button for each person
+                var deleteButton = '<button type="button" onclick="deletePerson(' + i + ')">Delete</button>';
+
+                peopleListDiv.innerHTML += '<div>' + personInfo + deleteButton + '</div>';
+            }
+        }
+
+        function deletePerson(index) {
+            if (index >= 0 && index < people.length) {
+                people.splice(index, 1);
+                displayPeople();
+            }
+        }
+
+        function clearForm() {
+            document.getElementById("name").value = '';
+            document.getElementById("email").value = '';
+            document.getElementById("phone").value = '';
+        }
+    </script>
+</body>
+</html>
